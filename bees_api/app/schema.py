@@ -11,8 +11,8 @@ from strawberry.types import Info
 from app.core.config import settings
 from app.core.security import create_access_token, get_current_user
 from app.crud import (authenticate_user, create_bee, create_user, delete_bee,
-                      get_bee, get_bees, get_user_by_email,
-                      get_user_by_username)
+                    get_bee, get_bees, get_user_by_email,
+                    get_user_by_username)
 from app.db import get_db
 from app.models import Bee, User
 

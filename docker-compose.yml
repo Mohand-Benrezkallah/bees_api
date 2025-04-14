@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:16
@@ -16,10 +14,15 @@ services:
       retries: 5
 
   app:
-    build: .
+    build:
+      context: ./bees_api/
+      dockerfile: Dockerfile
+      args:
+        BUILDKIT_INLINE_CACHE: 0
+    container_name: bees_api_backend
     command: uvicorn bees_api.app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
-      - ./:/app
+      - ./bees_api:/src/bees_api
     ports:
       - "8000:8000"
     environment:
