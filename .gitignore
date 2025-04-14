@@ -1,0 +1,42 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.env
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Local development settings
+.DS_Store
+
+# Uploaded images (except placeholders)
+bees_api/app/images/*
+!bees_api/app/images/.gitkeep
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover

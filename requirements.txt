@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+strawberry-graphql[fastapi]
+sqlalchemy
+alembic
+psycopg2-binary
+python-jose
+passlib
+python-multipart
+asyncpg
+pydantic
+pydantic-settings
+pytest
+pytest-asyncio
+httpx
