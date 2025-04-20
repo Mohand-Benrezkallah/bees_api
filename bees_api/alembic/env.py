@@ -17,8 +17,8 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Import models for autogeneration support
-from bees_api.app.models import Base
-from bees_api.app.core.config import settings
+from app.models import Base
+from app.core.config import settings
 
 # Set the SQLAlchemy URL from environment variables
 config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)

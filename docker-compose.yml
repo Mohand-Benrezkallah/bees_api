@@ -17,12 +17,11 @@ services:
     build:
       context: ./bees_api/
       dockerfile: Dockerfile
-      args:
-        BUILDKIT_INLINE_CACHE: 0
+    image: bees_api:latest
     container_name: bees_api_backend
-    command: uvicorn bees_api.app.main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
-      - ./bees_api:/src/bees_api
+      - ./bees_api:/src/ # Mount directly to the WORKDIR
     ports:
       - "8000:8000"
     environment:

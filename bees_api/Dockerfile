@@ -5,8 +5,6 @@ WORKDIR /src
 # Set Python path to include the current directory
 ENV PYTHONPATH=/src
 
-# Add a cache-busting argument that can be used to force rebuilds
-ARG CACHEBUST=1
 
 # Install dependencies first (this rarely changes)
 COPY requirements.txt .
@@ -19,4 +17,4 @@ COPY . .
 RUN mkdir -p /src/app/images
 
 # Run the application
-CMD ["uvicorn", "bees_api.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

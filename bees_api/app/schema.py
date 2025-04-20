@@ -57,7 +57,11 @@ class Query:
     @strawberry.field
     async def bees(self, info: Info) -> List[BeeType]:
         # Verify authentication
-        user = await get_current_user(info.context["request"].headers.get("Authorization", "").replace("Bearer ", ""), info.context["db"])
+        user = await get_current_user(
+            info.context["request"].headers.get("Authorization", "").replace("Bearer ", ""), 
+            info.context["db"],
+            get_user_by_username
+        )
         
         # Get bees
         db_bees = await get_bees(info.context["db"])
@@ -76,7 +80,11 @@ class Query:
     @strawberry.field
     async def bee(self, info: Info, id: int) -> Optional[BeeType]:
         # Verify authentication
-        user = await get_current_user(info.context["request"].headers.get("Authorization", "").replace("Bearer ", ""), info.context["db"])
+        user = await get_current_user(
+            info.context["request"].headers.get("Authorization", "").replace("Bearer ", ""), 
+            info.context["db"],
+            get_user_by_username
+        )
         
         # Get bee
         db_bee = await get_bee(info.context["db"], id)
@@ -95,7 +103,11 @@ class Query:
     @strawberry.field
     async def me(self, info: Info) -> UserType:
         # Verify authentication
-        user = await get_current_user(info.context["request"].headers.get("Authorization", "").replace("Bearer ", ""), info.context["db"])
+        user = await get_current_user(
+            info.context["request"].headers.get("Authorization", "").replace("Bearer ", ""), 
+            info.context["db"],
+            get_user_by_username
+        )
         
         return UserType(
             id=user.id,
@@ -161,7 +173,11 @@ class Mutation:
         image: Optional[Upload] = None,
     ) -> BeeType:
         # Verify authentication
-        user = await get_current_user(info.context["request"].headers.get("Authorization", "").replace("Bearer ", ""), info.context["db"])
+        user = await get_current_user(
+            info.context["request"].headers.get("Authorization", "").replace("Bearer ", ""), 
+            info.context["db"],
+            get_user_by_username
+        )
         
         # Handle image upload if provided
         image_path = None
@@ -207,7 +223,11 @@ class Mutation:
     @strawberry.mutation
     async def delete_bee(self, info: Info, id: int) -> bool:
         # Verify authentication
-        user = await get_current_user(info.context["request"].headers.get("Authorization", "").replace("Bearer ", ""), info.context["db"])
+        user = await get_current_user(
+            info.context["request"].headers.get("Authorization", "").replace("Bearer ", ""), 
+            info.context["db"],
+            get_user_by_username
+        )
         
         # Delete bee
         success = await delete_bee(info.context["db"], id)

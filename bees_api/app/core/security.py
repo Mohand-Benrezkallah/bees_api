@@ -11,18 +11,17 @@ from app.core.config import settings
 from app.db import get_db
 from app.models import User
 
+# Password functions
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/graphql")
-
-async def get_user(db: AsyncSession, username: str) -> Optional[User]:
-    result = await db.execute(User.__table__.select().where(User.username == username))
-    return result.scalar_one_or_none()
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
+
+# Authentication
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/graphql")
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     to_encode = data.copy()
@@ -35,8 +34,9 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     return encoded_jwt
 
 async def get_current_user(
-    token: str = Depends(oauth2_scheme),
-    db: AsyncSession = Depends(get_db)
+    token: str, # Removed Depends()
+    db: AsyncSession, # Removed Depends()
+    get_user_func: callable
 ) -> User:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -53,7 +53,8 @@ async def get_current_user(
     except JWTError:
         raise credentials_exception
 
-    user = await get_user(db, username=username)
+    # Use the function passed as parameter
+    user = await get_user_func(db, username=username)
     if user is None:
         raise credentials_exception
     if not user.is_active:
