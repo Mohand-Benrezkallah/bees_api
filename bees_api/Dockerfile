@@ -15,6 +15,3 @@ COPY . .
 
 # Create directory for uploaded images if it doesn't exist
 RUN mkdir -p /src/app/images
-
-# Run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
